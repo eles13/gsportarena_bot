@@ -12,12 +12,16 @@ def search_or_save_user(mdb, effective_user):
             "user_name": effective_user.username,
             "first_name": effective_user.first_name,
             "last_name": effective_user.last_name,
+            'events' :[],
             'nick': None,
-            "state": -2,
+            "state": 0,
             "reviews": [],
         }
         mdb.users.insert_one(user)  
     return user
+
+def add_event(mdb, userId, event):
+    mdb.users.update_one({ 'userId' : userId }, {'$addToSet' : { 'events' : event }})
 
 def add_review(mdb, userId, review):
     mdb.users.update_one({ 'userId' : userId }, {'$addToSet' : { 'reviews' : review }})
@@ -27,7 +31,7 @@ def get_current_state(mdb, userId):
     if not user:  
         user = {
             "userId": userId,
-            "state": -2,
+            "state": 0,
             "reviews": [],
         }
         mdb.users.insert_one(user)
@@ -113,16 +117,21 @@ def get_coach(mdb, coachName):
 def get_training(mdb, trainId):
     training = mdb.trainings.find_one({"trainId": trainId})
     if not training: 
+        return None
         training = {
             'trainId': trainId,
             'date': None,
+            'hour': None,
             'court': None,
+            'duration': None,
             'coach': None,
             'price': None,
             'level': None,
+            'sex': 'мж',
             'players': [],
             'max_players': None,
             'free_places': None,
+            'header': None,
         }
         mdb.trainings.insert_one(training)
     return training
@@ -130,15 +139,19 @@ def get_training(mdb, trainId):
 def get_game(mdb, gameId):
     game = mdb.games.find_one({"gameId": gameId})
     if not game: 
+        return None
         game = {
             'gameId': gameId,
             'date': None,
+            'hour': None,
             'court': None,
             'price': None,
             'level': None,
+            'duration': None,
             'players': [],
             'max_players': None,
             'free_places': None,
+            'header': None,
         }
         mdb.games.insert_one(game)
     return game
@@ -146,6 +159,7 @@ def get_game(mdb, gameId):
 def get_booking(mdb, bookingId):
     booking = mdb.bookings.find_one({"bookingId": bookingId})
     if not booking: 
+        return None
         booking = {
             'bookingId': bookingId,
             'start': None,
@@ -153,6 +167,11 @@ def get_booking(mdb, bookingId):
             'duration': None,
             'end': None,
             'nick': None,
+            'type': None,
+            'id': None,
+            'date': None,
+            'hour': None,
+            'header': None,
         }
         mdb.bookings.insert_one(booking)
     return booking 
