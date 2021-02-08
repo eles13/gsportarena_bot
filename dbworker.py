@@ -127,7 +127,6 @@ def get_training(mdb, trainId):
             'coach': None,
             'price': None,
             'level': None,
-            'sex': 'мж',
             'players': [],
             'max_players': None,
             'free_places': None,
