@@ -1,1 +1,10 @@
 INFO:root:Started
+ERROR:TeleBot:KeyError occurred, args=('gameId',)
+Traceback (most recent call last):
+  File "/home/pe/anaconda3/envs/pycode/lib/python3.7/site-packages/telebot/util.py", line 69, in run
+    task(*args, **kwargs)
+  File "<ipython-input-1-f55f9bff2aa9>", line 436, in admin_get_date
+    game = get_game(mdb, booking['gameId'])
+KeyError: 'gameId'
+
+INFO:root:Started

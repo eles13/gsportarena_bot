@@ -12,7 +12,7 @@ def search_or_save_user(mdb, effective_user):
             "user_name": effective_user.username,
             "first_name": effective_user.first_name,
             "last_name": effective_user.last_name,
-            'events' :[],
+            'events': [],
             'nick': None,
             "state": 0,
             "reviews": [],
